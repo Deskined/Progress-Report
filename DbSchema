@@ -1,0 +1,75 @@
+-- Creating Patients Table
+CREATE TABLE patients (
+    PatientID INT AUTO_INCREMENT PRIMARY KEY,
+    FirstName VARCHAR(50) NOT NULL,
+    LastName VARCHAR(50) NOT NULL,
+    DOB DATE NOT NULL,
+    Gender VARCHAR(10),
+    Address VARCHAR(100),
+    PhoneNumber VARCHAR(15)
+);
+
+-- Creating Doctors Table
+CREATE TABLE doctors (
+    DoctorID INT AUTO_INCREMENT PRIMARY KEY,
+    FirstName VARCHAR(50) NOT NULL,
+    LastName VARCHAR(50) NOT NULL,
+    Specialization VARCHAR(50),
+    PhoneNumber VARCHAR(15)
+);
+
+-- Creating Appointments Table
+CREATE TABLE appointments (
+    AppointmentID INT AUTO_INCREMENT PRIMARY KEY,
+    PatientID INT,
+    DoctorID INT,
+    AppointmentDate DATETIME NOT NULL,
+    Reason VARCHAR(255),
+    FOREIGN KEY (PatientID) REFERENCES patients(PatientID),
+    FOREIGN KEY (DoctorID) REFERENCES doctors(DoctorID)
+);
+
+-- Creating MedicalRecords Table
+CREATE TABLE medical_records (
+    RecordID INT AUTO_INCREMENT PRIMARY KEY,
+    PatientID INT,
+    RecordDate DATE NOT NULL,
+    Description TEXT,
+    FOREIGN KEY (PatientID) REFERENCES patients(PatientID)
+);
+
+-- Creating Prescriptions Table
+CREATE TABLE prescriptions (
+    PrescriptionID INT AUTO_INCREMENT PRIMARY KEY,
+    RecordID INT,
+    Medication VARCHAR(100) NOT NULL,
+    Dosage VARCHAR(50),
+    Frequency VARCHAR(50),
+    FOREIGN KEY (RecordID) REFERENCES medical_records(RecordID)
+);
+
+-- Inserting sample doctors
+INSERT INTO doctors (FirstName, LastName, Specialization, PhoneNumber) VALUES
+('John', 'Doe', 'Cardiologist', '555-1122'),
+('Jane', 'Smith', 'Pediatrician', '555-2233'),
+('Michael', 'Brown', 'Orthopedic Surgeon', '555-3344'),
+('Emily', 'Wilson', 'Neurologist', '555-4455'),
+('Robert', 'Taylor', 'General Practitioner', '555-5566'),
+('Laura', 'Davis', 'Dermatologist', '555-6677'),
+('William', 'Jones', 'Ophthalmologist', '555-7788'),
+('Sophia', 'Garcia', 'Oncologist', '555-8899'),
+('Daniel', 'Martinez', 'Endocrinologist', '555-9900'),
+('Olivia', 'Harris', 'Rheumatologist', '555-1010');
+
+-- Inserting sample patients
+INSERT INTO patients (FirstName, LastName, DOB, Gender, Address, PhoneNumber) VALUES
+('Alice', 'Johnson', '1985-03-22', 'Female', '123 Maple Street, Springfield', '555-1234'),
+('Bob', 'Smith', '1972-07-15', 'Male', '456 Oak Avenue, Shelbyville', '555-5678'),
+('Carol', 'Davis', '1990-11-09', 'Female', '789 Pine Road, Capital City', '555-8765'),
+('David', 'Wilson', '1965-05-30', 'Male', '101 Elm Street, Springfield', '555-4321'),
+('Emma', 'Brown', '1980-09-11', 'Female', '202 Cedar Lane, Shelbyville', '555-6789'),
+('Frank', 'Miller', '2000-01-19', 'Male', '303 Birch Boulevard, Capital City', '555-3456'),
+('Grace', 'Taylor', '1995-06-28', 'Female', '404 Walnut Way, Springfield', '555-6543'),
+('Henry', 'Moore', '1988-12-25', 'Male', '505 Spruce Circle, Shelbyville', '555-7890'),
+('Isabella', 'Anderson', '1975-08-13', 'Female', '606 Fir Avenue, Capital City', '555-2109'),
+('James', 'Thomas', '1960-04-17', 'Male', '707 Maple Street, Springfield', '555-3210');
